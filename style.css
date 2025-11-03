@@ -65,3 +65,18 @@ button:hover {
 .oculto {
   display: none;
 }
+
+#status {
+  font-size: 0.95rem;
+  color: #2f4f2f;
+  min-height: 1.2rem;
+}
+
+#status.error {
+  color: #c40000;
+}
+
+#status.info {
+  color: #2f4f2f;
+  opacity: 0.9;
+}
