@@ -5,161 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recicla - Consulta de Puntos</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* --- Estilos adicionales responsivos --- */
-    body {
-      font-family: "Segoe UI", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f8f7;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-    }
-
-    .container {
-      width: 90%;
-      max-width: 450px;
-      background: white;
-      border-radius: 12px;
-      padding: 25px;
-      margin-top: 40px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    h1 {
-      color: #3a7d44;
-      margin-bottom: 10px;
-    }
-
-    input {
-      width: 70%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1em;
-      margin-right: 5px;
-    }
-
-    button {
-      background-color: #3a7d44;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1em;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background-color: #2e6b38;
-    }
-
-    .resultado {
-      background-color: #f0f9f2;
-      border-radius: 10px;
-      padding: 20px;
-      margin-top: 20px;
-      text-align: left;
-    }
-
-    .resultado h2 {
-      text-align: center;
-      color: #3a7d44;
-    }
-
-    .total {
-      font-size: 1.1em;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    .oculto {
-      display: none;
-    }
-
-    .error {
-      color: red;
-      font-weight: bold;
-    }
-
-    /* Imagen del usuario */
-    #imagensita {
-      display: block;
-      margin: 10px auto;
-      width: 200px;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-
-    /* --- Tops --- */
-    .tops-container {
-      margin-top: 35px;
-      text-align: center;
-    }
-
-    .tops-container h3 {
-      color: #3a7d44;
-      margin-bottom: 10px;
-    }
-
-    .top-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      text-align: left;
-      margin: 0 auto;
-      max-width: 350px;
-    }
-
-    .top-item {
-      background: #e8f5e9;
-      padding: 10px;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 20px;
-      }
-
-      input {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-
-      button {
-        width: 100%;
-      }
-
-      .top-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
 </head>
 <body>
   <div class="container">
     <h1>♻️ Recicla</h1>
     <p>Consulta tu puntaje ingresando tu ID de usuario</p>
 
-    <div class="search-box">
-      <input type="text" id="userId" placeholder="Ingresa tu ID">
-      <button id="consultarBtn">Consultar</button>
-    </div>
+    <input type="text" id="userId" placeholder="Ingresa tu ID">
+    <button id="consultarBtn">Consultar</button>
 
     <div id="status" role="status" aria-live="polite" style="margin-top:12px;"></div>
 
     <div id="resultado" class="resultado oculto">
-      <img id="imagensita" src="imagensita.jpg" alt="Imagen del usuario">
-
       <h2 id="nombreUsuario"></h2>
       <p><strong>Latas:</strong> <span id="latas">0</span></p>
       <p><strong>Tetra Pak:</strong> <span id="tetra">0</span></p>
@@ -168,15 +25,6 @@
     </div>
 
     <p id="error" class="error oculto">No se encontró el usuario. Intenta con otro ID.</p>
-
-    <!-- Sección de tops -->
-    <div class="tops-container" id="tops">
-      <h3>🏆 Top Recicladores</h3>
-      <div id="topLatas" class="top-list"></div>
-      <div id="topTetra" class="top-list"></div>
-      <div id="topVidrio" class="top-list"></div>
-      <div id="topTotal" class="top-list"></div>
-    </div>
   </div>
 
   <script src="script.js"></script>
