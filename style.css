@@ -1,30 +1,33 @@
+/* === Estilo general del cuerpo === */
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: #ccf0c3; /* verde claro pastel */
-  color: #333;
-  margin: 0;
-  display: flex;
+  font-family: "Poppins", sans-serif; /* Fuente moderna y limpia */
+  background-color: #ccf0c3; /* Fondo verde claro pastel */
+  color: #333; /* Color de texto principal */
+  margin: 0; /* Quita márgenes por defecto */
+  display: flex; /* Centra el contenido */
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
 }
 
+/* === Contenedor principal del contenido === */
 .container {
-  background-color: #294709;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background-color: #294709; /* Verde oscuro */
+  border-radius: 20px; /* Bordes redondeados */
+  padding: 30px; /* Espaciado interno */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra sutil */
   text-align: center;
-  width: 90%;
-  max-width: 400px; /* un poco más ancho */
+  width: 90%; /* Ancho adaptable */
+  max-width: 400px; /* Máximo ancho en pantallas grandes */
   margin: 0 auto;
 }
 
-
+/* === Título principal === */
 h1 {
-  color: #648c3c;
+  color: #b0e57c; /* Verde más claro que contraste con el fondo */
 }
 
+/* === Campo de texto === */
 input {
   padding: 10px;
   border: 1px solid #8ab96f;
@@ -34,8 +37,9 @@ input {
   text-align: center;
 }
 
+/* === Botón de consulta === */
 button {
-  background-color: #4c8a2f; /* verde más oscuro */
+  background-color: #4c8a2f; /* Verde medio */
   color: white;
   border: none;
   padding: 10px 15px;
@@ -45,9 +49,10 @@ button {
 }
 
 button:hover {
-  background-color: #3a6b24;
+  background-color: #3a6b24; /* Se oscurece al pasar el mouse */
 }
 
+/* === Contenedor del resultado general === */
 .resultado {
   margin-top: 20px;
   background-color: #b0e57c;
@@ -55,49 +60,41 @@ button:hover {
   padding: 15px;
 }
 
-.total {
-  font-size: 1.2em;
-  color: #2f4f2f;
+/* === Clase para ocultar secciones dinámicamente === */
+.oculto {
+  display: none;
 }
 
+/* === Mensajes de error === */
 .error {
   color: red;
   margin-top: 10px;
 }
 
-.oculto {
-  display: none;
-}
-
+/* === Indicador de estado (consultando, error, etc.) === */
 #status {
   font-size: 0.95rem;
-  color: #2f4f2f;
+  color: #f6fff1;
   min-height: 1.2rem;
 }
 
-#status.error {
-  color: #c40000;
-}
-
-#status.info {
-  color: #2f4f2f;
-  opacity: 0.9;
-}
-
+/* === Contenedor de las 4 cajitas (2x2) === */
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
   gap: 15px;
   margin-top: 20px;
   justify-items: center;
 }
 
+/* === Cada cajita de puntaje === */
 .card {
-  background-color: #b0e57c;
+  background-color: #f6fff1; /* Verde muy claro */
   border-radius: 15px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 15px;
   height: 110px;
+  width: 110px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -110,12 +107,14 @@ button:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+/* === Título dentro de cada tarjeta === */
 .card h4 {
   margin: 0;
   font-size: 0.9em;
   color: #2f4f2f;
 }
 
+/* === Valor numérico dentro de la tarjeta === */
 .score {
   margin-top: 8px;
   font-size: 1.4em;
@@ -123,59 +122,9 @@ button:hover {
   color: #355e3b;
 }
 
-.card .score {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #2f4f2f;
-}
-
-.total-card {
-  background-color: #9cd37a;
-  width: 250px;
-}
-
-/* === Sección de Tops === */
-.tops-section {
-  margin-top: 25px;
-  text-align: center;
-}
-
-select {
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #8ab96f;
-  width: 85%;
-  font-size: 1em;
-  background-color: #f6fff1;
-  margin-top: 10px;
-}
-
-.top-list {
-  margin-top: 10px;
-  background-color: #b0e57c;
-  border-radius: 10px;
-  padding: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  text-align: left;
-  font-size: 0.9em;
-}
-
-.top-item {
-  padding: 5px;
-  border-bottom: 1px solid #8ab96f;
-}
-
-.top-item:last-child {
-  border-bottom: none;
-}
-
+/* === Responsivo para pantallas pequeñas === */
 @media (max-width: 400px) {
-  .card {
-    width: 100%;
-  }
-
-  .total-card {
-    width: 100%;
+  .cards-container {
+    grid-template-columns: 1fr; /* Una tarjeta por fila en móvil */
   }
 }
