@@ -1,54 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recicla - Consulta de Puntos</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <div class="container">
     <h1>♻️ Recicla</h1>
     <p>Consulta tu puntaje ingresando tu ID de usuario</p>
 
-    <input type="text" id="userId" placeholder="Ingresa tu ID" />
+    <input type="text" id="userId" placeholder="Ingresa tu ID">
     <button id="consultarBtn">Consultar</button>
 
-    <div id="status" role="status" aria-live="polite" style="margin-top: 12px"></div>
+    <div id="status" role="status" aria-live="polite" style="margin-top:12px;"></div>
 
-    <!-- Resultados -->
     <div id="resultado" class="resultado oculto">
-      <h3 id="nombreUsuario"></h3>
-
-      <div class="cards-container">
-        <div class="card">
-          <h4>Latas</h4>
-          <div class="score" id="latas">0</div>
-        </div>
-        <div class="card">
-          <h4>Tetra Pak</h4>
-          <div class="score" id="tetra">0</div>
-        </div>
-        <div class="card">
-          <h4>Vidrio</h4>
-          <div class="score" id="vidrio">0</div>
-        </div>
-        <div class="card total-card">
-          <h4>Total</h4>
-          <div class="score" id="total">0</div>
-        </div>
-      </div>
+      <h2 id="nombreUsuario"></h2>
+      <p><strong>Latas:</strong> <span id="latas">0</span></p>
+      <p><strong>Tetra Pak:</strong> <span id="tetra">0</span></p>
+      <p><strong>Vidrio:</strong> <span id="vidrio">0</span></p>
+      <p class="total"><strong>Total:</strong> <span id="total">0</span></p>
     </div>
 
     <p id="error" class="error oculto">No se encontró el usuario. Intenta con otro ID.</p>
+  </div>
 
-    <!-- Combo Box de Tops -->
-    <div class="tops-section">
-      <h3>🏆 Consulta los Tops</h3>
-      <select id="categoriaTop">
-        <option value="" disabled selected>Selecciona una categoría</option>
-        <option value="/top_latas">Top Latas</option>
-        <option value="/top_tetra">Top Latas</option>
-        <option value="/top_vidrio">Top Latas</option>
-        <option value="/top_total">Top Latas</option>
+  <script src="script.js"></script>
+</body>
+</html>
