@@ -12,7 +12,7 @@ body {
 
 /* === Contenedor principal del contenido === */
 .container {
-  background-color: #294709; /* Verde oscuro */
+  background-color: #c4e89e; /* Verde oscuro */
   border-radius: 20px; /* Bordes redondeados */
   padding: 30px; /* Espaciado interno */
   box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra sutil */
@@ -24,7 +24,7 @@ body {
 
 /* === Título principal === */
 h1 {
-  color: #b0e57c; /* Verde más claro que contraste con el fondo */
+  color: #3e6715; /* Verde más claro que contraste con el fondo */
 }
 
 /* === Campo de texto === */
@@ -67,7 +67,7 @@ button:hover {
 
 /* === Mensajes de error === */
 .error {
-  color: red;
+  color: #9f0404;
   margin-top: 10px;
 }
 
@@ -117,7 +117,7 @@ button:hover {
 /* === Valor numérico dentro de la tarjeta === */
 .score {
   margin-top: 8px;
-  font-size: 1.4em;
+  font-size: 2.4em;
   font-weight: bold;
   color: #355e3b;
 }
