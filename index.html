@@ -14,6 +14,17 @@
     <input type="text" id="userId" placeholder="Ingresa tu ID">
     <button id="consultarBtn">Consultar</button>
 
+    <!-- NUEVA SECCIÓN: Selector de Top -->
+    <div class="top-selector">
+      <label for="topSelect">Ver ranking de:</label>
+      <select id="topSelect">
+        <option value="total">🏆 Top Total</option>
+        <option value="latas">🥫 Top Latas</option>
+        <option value="vidrio">🍾 Top Vidrio</option>
+        <option value="tetra">📦 Top Tetra Pak</option>
+      </select>
+    </div>
+
     <div id="status" role="status" aria-live="polite" style="margin-top:12px;"></div>
 
     <div id="resultado" class="resultado oculto">
@@ -34,9 +45,13 @@
         <div class="card">
           <h4>Total</h4>
           <div class="score" id="total">0</div>
-        </div>
       </div>
     </div>
+  </div>
+
+  <p id="error" class="error oculto">No se encontró el usuario. Intenta con otro ID.</p>
+</div>
+
 
     <p id="error" class="error oculto">No se encontró el usuario. Intenta con otro ID.</p>
   </div>

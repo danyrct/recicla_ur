@@ -128,3 +128,38 @@ button:hover {
     grid-template-columns: 1fr; /* Una tarjeta por fila en móvil */
   }
 }
+
+/* === Selector de Top === */
+.top-selector {
+  margin-top: 15px;
+  background-color: #b0e57c; /* Verde claro */
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.top-selector label {
+  color: #2f4f2f;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.top-selector select {
+  width: 85%;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #8ab96f;
+  background-color: #f6fff1;
+  font-size: 1em;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.top-selector select:hover {
+  background-color: #e1f5c4;
+  border-color: #4c8a2f;
+}
