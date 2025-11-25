@@ -114,7 +114,7 @@ button:hover {
   margin-top: 15px;
   background-color: #b0e57c;
   border-radius: 15px;
-  padding: 15px;
+  padding: 10px;
 }
 
 /* === Clase para ocultar secciones dinámicamente === */
@@ -124,38 +124,44 @@ button:hover {
 
 /* === Mensajes de error === */
 .error {
-  color: #9f0404;
+  color: #820303;
   margin-top: 10px;
+}
+
+#nombreUsuario {
+  color: #077537;
+  margin-bottom: 20px;
+  font-size: 1.4em;
 }
 
 /* === Indicador de estado (consultando, error, etc.) === */
 #status {
   font-size: 0.95rem;
-  color: #f6fff1;
+  color: #266106;
   min-height: 1.2rem;
 }
 
 /* === Contenedor de las 4 cajitas (2x2) === */
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Dos columnas */
-  gap: 15px;
-  margin-top: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
   justify-items: center;
 }
 
 /* === Cada cajita de puntaje === */
 .card {
   background-color: #f6fff1; /* Verde muy claro */
-  border-radius: 15px;
+  border: 2px solid #C3EEAF;
+  border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  padding: 15px;
-  height: 110px;
-  width: 110px;
+  padding: 10px;
+  height: 100px;
+  width: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s;
 }
 
