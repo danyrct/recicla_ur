@@ -1,4 +1,10 @@
 /* === Estilo general del cuerpo === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: "Poppins", sans-serif; /* Fuente moderna y limpia */
   background-color: #ccf0c3; /* Fondo verde claro pastel */
@@ -7,54 +13,105 @@ body {
   display: flex; /* Centra el contenido */
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  min-height: 100vh; /* Cambié a min-height para mejor scroll */
+  padding: 20px; /* Añadí padding para móviles */
+  height: auto;
 }
 
 /* === Contenedor principal del contenido === */
 .container {
   background-color: #c4e89e; /* Verde oscuro */
   border-radius: 20px; /* Bordes redondeados */
-  padding: 30px; /* Espaciado interno */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Sombra sutil */
+  padding: 25px; /* Espaciado interno */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Sombra sutil */
   text-align: center;
-  width: 90%; /* Ancho adaptable */
+  width: 100%; /* Ancho adaptable */
   max-width: 400px; /* Máximo ancho en pantallas grandes */
-  margin: 0 auto;
 }
 
 /* === Título principal === */
 h1 {
   color: #3e6715; /* Verde más claro que contraste con el fondo */
+  margin-bottom: 10px;
+  font-size: 2.2em;
+}
+
+p {
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 1.1em;
 }
 
 /* === Campo de texto === */
 input {
-  padding: 10px;
-  border: 1px solid #8ab96f;
-  border-radius: 8px;
-  width: 80%;
-  margin: 10px 0;
-  text-align: center;
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #8ab96f;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2E8B57;
 }
 
 /* === Botón de consulta === */
 button {
+  width: 100%;
+  padding: 15px;
   background-color: #4c8a2f; /* Verde medio */
   color: white;
   border: none;
   padding: 10px 15px;
-  border-radius: 10px;
+  border-radius: 12px;
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-bottom: 20px;
 }
 
 button:hover {
   background-color: #3a6b24; /* Se oscurece al pasar el mouse */
 }
 
+.top-selector {
+  background: #F8FFFA;
+  border: 2px solid #C3EEAF;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.top-selector label {
+  display: block;
+  color: #2E8B57;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 1em;
+}
+
+#topSelect {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #C3EEAF;
+  border-radius: 8px;
+  font-size: 16px;
+  background: white;
+  color: #333;
+}
+
+#topSelect:focus {
+  outline: none;
+  border-color: #2E8B57;
+}
+
 /* === Contenedor del resultado general === */
 .resultado {
-  margin-top: 20px;
+  margin-top: 15px;
   background-color: #b0e57c;
   border-radius: 15px;
   padding: 15px;
