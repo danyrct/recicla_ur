@@ -153,27 +153,8 @@ topSelect.addEventListener("change", async () => {
 
   setStatus(`Cargando ranking de ${categoria}...`);
 
-  // 1. Declarar 'objeto' con 'let' y darle un valor por defecto (opcional)
-  let objeto = ""; // Inicializar la variable
-
-  // 2. Corregir la sintaxis de los 'if' usando || (OR lógico)
-  if (categoria === "Top Latas" || categoria === "Latas") {
-    objeto = "latas";
-  } else if (categoria === "Top Vidrio" || categoria === "Vidrio") {
-    objeto = "vidrio";
-  } else if (categoria === "Top TetraPak" || categoria === "TetraPak") {
-    objeto = "tetra";
-  } else if (categoria === "Top Total" || categoria === "Total") {
-    objeto = "total";
-  }
-  if (!objeto) {
-    setStatus("Error interno: Categoría de ranking no reconocida.", "error");
-    console.error("La categoría del selector no coincidió con ninguna lógica:", categoria);
-    return;
-  }
-
   try {
-    const url = `https://recicla.onrender.com/top_${objeto}`;
+    const url = `https://recicla.onrender.com/top_${categoria}`;
     console.log("URL de ranking:", url);
 
     const resp = await fetchWithTimeout(url, { method: "GET" }, 10000);
@@ -213,7 +194,7 @@ topSelect.addEventListener("change", async () => {
           ${item.nombre || "Sin nombre"}
           <small>ID: ${item.user_id}</small>
         </div>
-        <div class="ranking-score">${objeto}</div>
+        <div class="ranking-score">${categoria}</div>
       `;
       rankingLista.appendChild(div);
     });
