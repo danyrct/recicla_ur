@@ -137,6 +137,21 @@ consultarBtn.addEventListener("click", async () => {
     console.log("- Verifica la URL y el ID.");
   }
 });
+lista.forEach((item, index) => {
+  const valor = item[categoria]; // ← AQUÍ LEEMOS LA CATEGORÍA DINÁMICA
+
+  const div = document.createElement("div");
+  div.className = "ranking-item";
+  div.innerHTML = `
+    <div class="ranking-pos">${index + 1}</div>
+    <div class="ranking-nombre">
+      ${item.nombre || "Sin nombre"}
+      <small>ID: ${item.user_id}</small>
+    </div>
+    <div class="ranking-score">${valor}</div>
+  `;
+  rankingLista.appendChild(div);
+});
 
 // Detectar cambio en el selector
 topSelect.addEventListener("change", async () => {
