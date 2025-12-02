@@ -188,7 +188,7 @@ topSelect.addEventListener("change", async () => {
     const campoPuntaje = categoria === 'total' ? 'total' : 
                         categoria === 'latas' ? 'lata' :
                         categoria === 'tetra' ? 'tetra' :
-                        categoria === 'vidrio' ? 'vidrio' : 'total';
+                        categoria === 'vidrio' ? 'vidrio' :
 
     // Ordenar por puntaje de mayor a menor
     lista.sort((a, b) => b[campoPuntaje] - a[campoPuntaje]);
