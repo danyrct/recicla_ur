@@ -152,14 +152,25 @@ topSelect.addEventListener("change", async () => {
   }
 
   setStatus(`Cargando ranking de ${categoria}...`);
-  if (categoria === "Top Latas") or (categoria === "Latas")
-    objeto="latas"
-  if (categoria === "Top Vidrio") or (categoria === "Vidrio")
-    objeto="vidrio"
-  if (categoria === "Top TetraPak") or (categoria === "TetraPak")
-    objeto="tetra"
-  if (categoria === "Top Total") or (categoria === "Total")
-    objeto="total"
+
+  // 1. Declarar 'objeto' con 'let' y darle un valor por defecto (opcional)
+  let objeto = ""; // Inicializar la variable
+
+  // 2. Corregir la sintaxis de los 'if' usando || (OR lógico)
+  if (categoria === "Top Latas" || categoria === "Latas") {
+    objeto = "latas";
+  } else if (categoria === "Top Vidrio" || categoria === "Vidrio") {
+    objeto = "vidrio";
+  } else if (categoria === "Top TetraPak" || categoria === "TetraPak") {
+    objeto = "tetra";
+  } else if (categoria === "Top Total" || categoria === "Total") {
+    objeto = "total";
+  }
+  if (!objeto) {
+    setStatus("Error interno: Categoría de ranking no reconocida.", "error");
+    console.error("La categoría del selector no coincidió con ninguna lógica:", categoria);
+    return;
+  }
 
   try {
     const url = `https://recicla.onrender.com/top_${objeto}`;
