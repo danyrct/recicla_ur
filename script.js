@@ -139,6 +139,10 @@ consultarBtn.addEventListener("click", async () => {
 });
 
 // Detectar cambio en el selector
+// script.js - versión corregida
+// ... (código anterior se mantiene igual hasta el evento change) ...
+
+// Detectar cambio en el selector
 topSelect.addEventListener("change", async () => {
   const categoria = topSelect.value;
 
@@ -151,17 +155,8 @@ topSelect.addEventListener("change", async () => {
     return;
   }
 
-  setStatus(`Cargando ranking de ${categoria}...`);
-  if (categoria === "Top Latas") or (categoria === "Latas")
-    objeto="latas"
-  if (categoria === "Top Vidrio") or (categoria === "Vidrio")
-    objeto="vidrio"
-  if (categoria === "Top TetraPak") or (categoria === "TetraPak")
-    objeto="tetra"
-  if (categoria === "Top Total") or (categoria === "Total")
-    objeto="total"
-
   try {
+    // CORRECCIÓN 1: Usar el valor correcto para la URL
     const url = `https://recicla.onrender.com/top_${categoria}`;
     console.log("URL de ranking:", url);
 
@@ -189,20 +184,30 @@ topSelect.addEventListener("change", async () => {
     // Limpiar contenedor
     rankingLista.innerHTML = "";
 
+    // CORRECCIÓN 2: Determinar el campo correcto para ordenar y mostrar
+    const campoPuntaje = categoria === 'total' ? 'total' : 
+                        categoria === 'latas' ? 'lata' :
+                        categoria === 'tetra' ? 'tetra' :
+                        categoria === 'vidrio' ? 'vidrio' : 'total';
+
     // Ordenar por puntaje de mayor a menor
-    lista.sort((a, b) => b.puntaje - a.puntaje);
+    lista.sort((a, b) => b[campoPuntaje] - a[campoPuntaje]);
 
     // Crear cada elemento visual
     lista.forEach((item, index) => {
       const div = document.createElement("div");
       div.className = "ranking-item";
+      
+      // CORRECCIÓN 3: Mostrar el puntaje correcto según la categoría
+      const puntaje = item[campoPuntaje] || 0;
+      
       div.innerHTML = `
         <div class="ranking-pos">${index + 1}</div>
         <div class="ranking-nombre">
           ${item.nombre || "Sin nombre"}
           <small>ID: ${item.user_id}</small>
         </div>
-        <div class="ranking-score">${item.puntaje}</div>
+        <div class="ranking-score">${puntaje}</div>
       `;
       rankingLista.appendChild(div);
     });
