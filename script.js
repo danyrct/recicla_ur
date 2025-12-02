@@ -162,7 +162,7 @@ topSelect.addEventListener("change", async () => {
     objeto="total"
 
   try {
-    const url = `https://recicla.onrender.com/top_${objeto}`;
+    const url = `https://recicla.onrender.com/top_${categoria}`;
     console.log("URL de ranking:", url);
 
     const resp = await fetchWithTimeout(url, { method: "GET" }, 10000);
