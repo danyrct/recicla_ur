@@ -152,9 +152,17 @@ topSelect.addEventListener("change", async () => {
   }
 
   setStatus(`Cargando ranking de ${categoria}...`);
+  if (categoria === "Top Latas") or (categoria === "Latas")
+    objeto="latas"
+  if (categoria === "Top Vidrio") or (categoria === "Vidrio")
+    objeto="vidrio"
+  if (categoria === "Top TetraPak") or (categoria === "TetraPak")
+    objeto="tetra"
+  if (categoria === "Top Total") or (categoria === "Total")
+    objeto="total"
 
   try {
-    const url = `https://recicla.onrender.com/top_{categoria}`;
+    const url = `https://recicla.onrender.com/top_${objeto}`;
     console.log("URL de ranking:", url);
 
     const resp = await fetchWithTimeout(url, { method: "GET" }, 10000);
