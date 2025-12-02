@@ -213,7 +213,7 @@ topSelect.addEventListener("change", async () => {
           ${item.nombre || "Sin nombre"}
           <small>ID: ${item.user_id}</small>
         </div>
-        <div class="ranking-score">${item.puntaje}</div>
+        <div class="ranking-score">${objeto}</div>
       `;
       rankingLista.appendChild(div);
     });
