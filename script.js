@@ -221,3 +221,4 @@ topSelect.addEventListener("change", async () => {
     setStatus("Ranking vacío.", "info");
     return;
   }
+});
