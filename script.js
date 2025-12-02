@@ -143,82 +143,75 @@ topSelect.addEventListener("change", async () => {
   const categoria = topSelect.value;
 
   console.clear();
-  console.log("Selector de ranking cambiado a:", categoria);
+  console.log("📌 Selector de ranking cambiado a:", categoria);
 
+  // Si no selecciona nada, ocultar el ranking
   if (categoria === "nada") {
     rankingContainer.classList.add("oculto");
     return;
   }
 
   setStatus(`Cargando ranking de ${categoria}...`);
+  if (categoria === "Top Latas") or (categoria === "Latas")
+    objeto="latas"
+  if (categoria === "Top Vidrio") or (categoria === "Vidrio")
+    objeto="vidrio"
+  if (categoria === "Top TetraPak") or (categoria === "TetraPak")
+    objeto="tetra"
+  if (categoria === "Top Total") or (categoria === "Total")
+    objeto="total"
 
-// Intenta dos formas de endpoint: /top/{categoria} y /top_{categoria}
-  const endpoints = [
-    `https://recicla.onrender.com/top_${categoria}`
-  ];
+  try {
+    const url = `https://recicla.onrender.com/top_${objeto}`;
+    console.log("URL de ranking:", url);
 
-  let resp = null;
-  let lista = null;
-  let lastError = null;
+    const resp = await fetchWithTimeout(url, { method: "GET" }, 10000);
 
-  for (const ep of endpoints) {
-    try {
-      console.log("Intentando endpoint:", ep);
-      resp = await fetchWithTimeout(ep, { method: "GET", cache: "no-store" }, 10000);
-
-      if (!resp.ok) {
-        console.warn("Endpoint respondió con error HTTP:", resp.status, "->", ep);
-        lastError = `HTTP ${resp.status} en ${ep}`;
-        // si 404 o 500, probar siguiente endpoint
-        continue;
-      }
-
-      // intentar parsear JSON
-      try {
-        lista = await resp.json();
-      } catch (jerr) {
-        // fallback: leer texto y parsear
-        const txt = await resp.text();
-        lista = JSON.parse(txt);
-      }
-
-      // si llegamos aquí, lista está cargada correctamente
-      break;
-    } catch (e) {
-      console.warn("Error al consultar endpoint:", ep, e);
-      lastError = e;
-      // probar siguiente endpoint
+    if (!resp.ok) {
+      console.warn("Error HTTP:", resp.status);
+      setStatus("No se pudo obtener el ranking.", "error");
+      return;
     }
-  }
 
-  if (!lista) {
-    console.error("No se pudo obtener el ranking. Detalle:", lastError);
-    setStatus("No se pudo obtener el ranking desde el servidor.", "error");
-    rankingContainer.classList.add("oculto");
-    return;
-  }
+    const text = await resp.text();
+    let lista;
 
-  // Asegurar que recibimos un array
-  if (!Array.isArray(lista)) {
-    console.warn("Respuesta del ranking no es un array:", lista);
-    setStatus("Respuesta inválida del servidor (esperaba lista).", "error");
-    rankingContainer.classList.add("oculto");
-    return;
-  }
+    try {
+      lista = JSON.parse(text);
+    } catch (e) {
+      console.error("JSON inválido:", e);
+      setStatus("Respuesta inválida del servidor.", "error");
+      return;
+    }
 
-  console.log("Ranking recibido (raw):", lista);
+    console.log("Ranking recibido:", lista);
 
-  // Limpiar contenedor
-  rankingLista.innerHTML = "";
+    // Limpiar contenedor
+    rankingLista.innerHTML = "";
 
-  // Ordenar por el puntaje dinámico (mayor a menor)
-  lista.sort((a, b) => getScore(b, categoria) - getScore(a, categoria));
+    // Ordenar por puntaje de mayor a menor
+    lista.sort((a, b) => b.puntaje - a.puntaje);
 
-  // Si no hay elementos, mostrar mensaje
-  if (lista.length === 0) {
+    // Crear cada elemento visual
+    lista.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "ranking-item";
+      div.innerHTML = `
+        <div class="ranking-pos">${index + 1}</div>
+        <div class="ranking-nombre">
+          ${item.nombre || "Sin nombre"}
+          <small>ID: ${item.user_id}</small>
+        </div>
+        <div class="ranking-score">${item.puntaje}</div>
+      `;
+      rankingLista.appendChild(div);
+    });
+
     rankingContainer.classList.remove("oculto");
-    rankingLista.innerHTML = `<div class="ranking-item"><div style="padding:10px">No hay datos para esta categoría.</div></div>`;
-    setStatus("Ranking vacío.", "info");
-    return;
+    setStatus("Ranking cargado ✔");
+
+  } catch (err) {
+    console.error("Error en ranking:", err);
+    setStatus("Error al cargar el ranking.", "error");
   }
 });
