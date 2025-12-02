@@ -4,6 +4,9 @@ const userIdInput = document.getElementById("userId");
 const resultado = document.getElementById("resultado");
 const errorEl = document.getElementById("error");
 const statusEl = document.getElementById("status");
+const topSelect = document.getElementById("topSelect");
+const rankingContainer = document.getElementById("rankingContainer");
+const rankingLista = document.getElementById("rankingLista");
 
 function setStatus(text, kind = "info") {
   if (!statusEl) return;
@@ -132,5 +135,75 @@ consultarBtn.addEventListener("click", async () => {
     console.log("- ¿Hay un problema de CORS? (Revisa la pestaña Network → el encabezado CORS)");
     console.log("- ¿Tu conexión a internet está activa?");
     console.log("- Verifica la URL y el ID.");
+  }
+});
+
+// Detectar cambio en el selector
+topSelect.addEventListener("change", async () => {
+  const categoria = topSelect.value;
+
+  console.clear();
+  console.log("📌 Selector de ranking cambiado a:", categoria);
+
+  // Si no selecciona nada, ocultar el ranking
+  if (categoria === "nada") {
+    rankingContainer.classList.add("oculto");
+    return;
+  }
+
+  setStatus(`Cargando ranking de ${categoria}...`);
+
+  try {
+    const url = `https://recicla.onrender.com/top_{categoria}`;
+    console.log("URL de ranking:", url);
+
+    const resp = await fetchWithTimeout(url, { method: "GET" }, 10000);
+
+    if (!resp.ok) {
+      console.warn("Error HTTP:", resp.status);
+      setStatus("No se pudo obtener el ranking.", "error");
+      return;
+    }
+
+    const text = await resp.text();
+    let lista;
+
+    try {
+      lista = JSON.parse(text);
+    } catch (e) {
+      console.error("JSON inválido:", e);
+      setStatus("Respuesta inválida del servidor.", "error");
+      return;
+    }
+
+    console.log("Ranking recibido:", lista);
+
+    // Limpiar contenedor
+    rankingLista.innerHTML = "";
+
+    // Ordenar por puntaje de mayor a menor
+    lista.sort((a, b) => b.puntaje - a.puntaje);
+
+    // Crear cada elemento visual
+    lista.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "ranking-item";
+      div.innerHTML = `
+        <div class="ranking-pos">${index + 1}</div>
+        <div class="ranking-nombre">
+          ${item.nombre || "Sin nombre"}
+          <small>ID: ${item.user_id}</small>
+        </div>
+        <div class="ranking-score">${item.puntaje}</div>
+      `;
+      rankingLista.appendChild(div);
+    });
+
+    rankingContainer.classList.remove("oculto");
+    setStatus("Ranking cargado ✔");
+
+  } catch (err) {
+    console.error("Error en ranking:", err);
+    setStatus("Error al cargar el ranking.", "error");
   }
 });
