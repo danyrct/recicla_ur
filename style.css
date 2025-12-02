@@ -226,3 +226,63 @@ button:hover {
   background-color: #e1f5c4;
   border-color: #4c8a2f;
 }
+
+/* === Ranking === */
+.ranking {
+  margin-top: 20px;
+  background-color: #b0e57c;
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  text-align: left;
+}
+
+.ranking h2 {
+  text-align: center;
+  color: #2f4f2f;
+  margin-bottom: 10px;
+}
+
+.ranking-item {
+  background: #f6fff1;
+  border: 2px solid #C3EEAF;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 40px 1fr 60px;
+  align-items: center;
+  gap: 10px;
+}
+
+.ranking-pos {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #355e3b;
+  text-align: center;
+}
+
+.ranking-nombre {
+  font-size: 1em;
+  color: #2f4f2f;
+}
+
+.ranking-score {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: right;
+  color: #266106;
+}
+
+.ranking small {
+  display: block;
+  font-size: 0.75em;
+  color: #666;
+}
+
+/* Responsivo */
+@media(max-width: 400px) {
+  .ranking-item {
+    grid-template-columns: 30px 1fr 50px;
+  }
+}
