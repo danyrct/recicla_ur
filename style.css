@@ -263,7 +263,7 @@ button:hover {
 /* === PARA ESCRITORIO (≥768px) === */
 @media (min-width: 768px) {
   .container {
-    max-width: 900px; /* Más ancho para escritorio */
+    max-width: 100%; /* Más ancho para escritorio */
     padding: 30px;
   }
   
