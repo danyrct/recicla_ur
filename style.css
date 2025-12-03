@@ -146,7 +146,7 @@ button:hover {
 .cards-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 5px;
   margin-top: 10px;
   justify-items: center;
 }
