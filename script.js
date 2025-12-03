@@ -220,3 +220,43 @@ topSelect.addEventListener("change", async () => {
     setStatus("Error al cargar el ranking.", "error");
   }
 });
+
+// Función para actualizar la posición del ranking según el dispositivo
+function actualizarPosicionRanking() {
+  const rankingContainer = document.getElementById('rankingContainer');
+  const rightSection = document.querySelector('.right-section');
+  const isMobile = window.innerWidth <= 767;
+  
+  // Remover de donde esté actualmente
+  rankingContainer.remove();
+  
+  if (isMobile) {
+    // En móvil: poner al final del container
+    document.querySelector('.container').appendChild(rankingContainer);
+    rankingContainer.classList.remove('ranking-desktop');
+    rankingContainer.classList.add('ranking-mobile');
+  } else {
+    // En escritorio: poner en .right-section
+    if (rightSection) {
+      rightSection.appendChild(rankingContainer);
+      rankingContainer.classList.remove('ranking-mobile');
+      rankingContainer.classList.add('ranking-desktop');
+    }
+  }
+}
+
+// Actualizar al cargar y al cambiar tamaño de ventana
+window.addEventListener('load', actualizarPosicionRanking);
+window.addEventListener('resize', actualizarPosicionRanking);
+
+// También actualizar cuando se muestra el ranking (por si acaso)
+topSelect.addEventListener('change', () => {
+  // Esperar un momento para que se procese el cambio
+  setTimeout(actualizarPosicionRanking, 50);
+});
+
+// Actualizar cuando se consulta un usuario
+consultarBtn.addEventListener('click', () => {
+  // Esperar a que se complete la consulta
+  setTimeout(actualizarPosicionRanking, 100);
+});
