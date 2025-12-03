@@ -145,7 +145,7 @@ button:hover {
 /* === Cards container === */
 .cards-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);;
   gap: 5px;
   margin-top: 10px;
   justify-items: center;
@@ -157,11 +157,12 @@ button:hover {
   border: 2px solid #C3EEAF;
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 0;
   padding: 5px;
   height: 100px;
   width: 100px;
   display: flex;
-  flex-direction:row;
+  flex-direction:column;
   justify-content: center;
   transition: transform 0.2s ease-in-out, box-shadow 0.2s;
 }
