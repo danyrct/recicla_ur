@@ -343,3 +343,42 @@ button:hover {
     margin-right: auto;
   }
 }
+
+/* === Asegurar que ranking-mobile siempre esté abajo en móvil === */
+@media (max-width: 767px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .ranking-mobile {
+    order: 999; /* Fuerza a estar al final */
+    margin-top: 20px !important;
+  }
+  
+  /* Ocultar ranking-desktop en móvil */
+  .ranking-desktop {
+    display: none !important;
+  }
+  
+  /* Asegurar que main-content venga primero */
+  .main-content {
+    order: 1;
+  }
+  
+  /* Asegurar que ranking-mobile venga último */
+  #rankingContainerMobile {
+    order: 3;
+  }
+}
+
+/* === En escritorio, asegurar que ranking-desktop esté visible === */
+@media (min-width: 768px) {
+  .ranking-desktop {
+    display: block !important;
+  }
+  
+  .ranking-mobile {
+    display: none !important;
+  }
+}

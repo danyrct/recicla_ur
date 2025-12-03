@@ -1,4 +1,4 @@
-// script.js - versión con layout responsivo mejorado
+// script.js - versión corregida para mostrar ranking siempre abajo en móvil
 const consultarBtn = document.getElementById("consultarBtn");
 const userIdInput = document.getElementById("userId");
 const resultado = document.getElementById("resultado");
@@ -47,17 +47,22 @@ function sincronizarRankings() {
   }
 }
 
-// Función para manejar el layout responsivo
-function manejarLayoutResponsivo() {
+// Función para manejar la visibilidad de rankings según dispositivo
+function actualizarVisibilidadRankings() {
   const isMobile = window.innerWidth < 768;
   
-  // Actualizar clases según el dispositivo
   if (isMobile) {
-    document.body.classList.add('mobile');
-    document.body.classList.remove('desktop');
+    // En móvil: mostrar solo ranking-mobile, ocultar ranking-desktop
+    if (rankingContainer) {
+      rankingContainer.classList.add("oculto");
+    }
+    // El ranking-mobile ya se maneja por separado
   } else {
-    document.body.classList.add('desktop');
-    document.body.classList.remove('mobile');
+    // En desktop: mostrar solo ranking-desktop, ocultar ranking-mobile
+    if (rankingContainerMobile) {
+      rankingContainerMobile.classList.add("oculto");
+    }
+    // El ranking-desktop ya se maneja por separado
   }
 }
 
@@ -83,14 +88,11 @@ consultarBtn.addEventListener("click", async () => {
   setStatus("Consultando servidor...", "info");
 
   try {
-    // Ejecutar fetch con timeout
     const response = await fetchWithTimeout(url, { method: "GET", cache: "no-store" }, 10000);
     console.log("Fetch completado. Código HTTP:", response.status);
 
-    // Revisar status HTTP
     if (!response.ok) {
       console.warn("Respuesta HTTP no OK:", response.status, response.statusText);
-      // mostrar mensaje más claro en pantalla
       if (response.status === 404) {
         setStatus("Usuario no encontrado (404). Revisa el ID.", "error");
       } else if (response.status === 500) {
@@ -99,7 +101,6 @@ consultarBtn.addEventListener("click", async () => {
         setStatus(`Error: ${response.status} ${response.statusText}`, "error");
       }
 
-      // También comprobar si el cuerpo trae información de error
       try {
         const txt = await response.text();
         console.log("Cuerpo de la respuesta (texto):", txt);
@@ -109,7 +110,6 @@ consultarBtn.addEventListener("click", async () => {
       return;
     }
 
-    // Intentar parsear JSON y comprobar estructura
     let data;
     const text = await response.text();
     console.log("Cuerpo recibido (raw):", text);
@@ -123,7 +123,6 @@ consultarBtn.addEventListener("click", async () => {
       return;
     }
 
-    // Validar campos esperados
     const expected = ["lata", "tetra", "vidrio", "total", "nombre", "user_id"];
     const missing = expected.filter(k => !(k in data));
     if (missing.length > 0) {
@@ -133,7 +132,6 @@ consultarBtn.addEventListener("click", async () => {
       return;
     }
 
-    // Todo bien: mostrar en la UI
     document.getElementById("nombreUsuario").textContent = data.nombre || "—";
     document.getElementById("latas").textContent = data.lata ?? 0;
     document.getElementById("tetra").textContent = data.tetra ?? 0;
@@ -153,11 +151,10 @@ consultarBtn.addEventListener("click", async () => {
       return;
     }
 
-    // Posibles causas comunes y cómo verificarlas
     setStatus("No se pudo completar la consulta. Ver consola para más detalles.", "error");
     console.log("Posibles causas a revisar:");
     console.log("- ¿El servidor está en línea?");
-    console.log("- ¿Hay un problema de CORS? (Revisa la pestaña Network → el encabezado CORS)");
+    console.log("- ¿Hay un problema de CORS?");
     console.log("- ¿Tu conexión a internet está activa?");
     console.log("- Verifica la URL y el ID.");
   }
@@ -169,6 +166,9 @@ topSelect.addEventListener("change", async () => {
 
   console.clear();
   console.log("📌 Selector de ranking cambiado a:", categoria);
+
+  // Actualizar visibilidad según dispositivo
+  actualizarVisibilidadRankings();
 
   // Si no selecciona nada, ocultar ambos rankings
   if (categoria === "nada") {
@@ -204,9 +204,9 @@ topSelect.addEventListener("change", async () => {
 
     // Determinar el campo correcto para ordenar y mostrar
     const campoPuntaje = categoria === 'total' ? 'total' : 
-                        categoria === 'latas' ? 'latas' :
+                        categoria === 'latas' ? 'lata' :
                         categoria === 'tetra' ? 'tetra' :
-                        categoria === 'vidrio' ? 'vidrio' :
+                        categoria === 'vidrio' ? 'vidrio' : 'total';
 
     // Ordenar por puntaje de mayor a menor
     lista.sort((a, b) => b[campoPuntaje] - a[campoPuntaje]);
@@ -236,12 +236,25 @@ topSelect.addEventListener("change", async () => {
       rankingLista.appendChild(div);
     });
 
-    // Mostrar ambos rankings
-    if (rankingContainer) {
-      rankingContainer.classList.remove("oculto");
-    }
-    if (rankingContainerMobile) {
-      rankingContainerMobile.classList.remove("oculto");
+    // Mostrar el ranking apropiado según el dispositivo
+    const isMobile = window.innerWidth < 768;
+    
+    if (isMobile) {
+      // En móvil: mostrar ranking-mobile, ocultar ranking-desktop
+      if (rankingContainerMobile) {
+        rankingContainerMobile.classList.remove("oculto");
+      }
+      if (rankingContainer) {
+        rankingContainer.classList.add("oculto");
+      }
+    } else {
+      // En desktop: mostrar ranking-desktop, ocultar ranking-mobile
+      if (rankingContainer) {
+        rankingContainer.classList.remove("oculto");
+      }
+      if (rankingContainerMobile) {
+        rankingContainerMobile.classList.add("oculto");
+      }
     }
     
     // Sincronizar contenido entre desktop y mobile
@@ -255,30 +268,28 @@ topSelect.addEventListener("change", async () => {
   }
 });
 
-// Inicializar el layout responsivo
+// Inicializar al cargar
 window.addEventListener('load', () => {
-  manejarLayoutResponsivo();
+  actualizarVisibilidadRankings();
   
-  // Si hay un ranking visible, asegurarse de que esté en el lugar correcto
-  if (rankingContainer && !rankingContainer.classList.contains('oculto')) {
-    sincronizarRankings();
+  // Verificar si hay un ranking ya cargado y ajustarlo
+  const categoria = topSelect.value;
+  if (categoria !== "nada") {
+    // Si ya hay un ranking seleccionado, asegurar visibilidad correcta
+    setTimeout(() => {
+      actualizarVisibilidadRankings();
+      sincronizarRankings();
+    }, 100);
   }
 });
 
-// Actualizar layout al cambiar tamaño de ventana
-window.addEventListener('resize', manejarLayoutResponsivo);
-
-// También actualizar cuando se muestra el ranking
-topSelect.addEventListener('change', () => {
-  setTimeout(sincronizarRankings, 50);
-});
-
-// Actualizar cuando se consulta un usuario
-consultarBtn.addEventListener('click', () => {
-  // Pequeño delay para asegurar que la UI se actualice
-  setTimeout(() => {
-    if (!rankingContainer.classList.contains('oculto')) {
-      sincronizarRankings();
-    }
-  }, 100);
+// Actualizar al cambiar tamaño de ventana
+window.addEventListener('resize', () => {
+  actualizarVisibilidadRankings();
+  
+  // Si hay un ranking visible, ajustar su posición
+  const categoria = topSelect.value;
+  if (categoria !== "nada") {
+    setTimeout(actualizarVisibilidadRankings, 50);
+  }
 });
