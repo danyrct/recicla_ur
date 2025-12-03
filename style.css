@@ -6,32 +6,32 @@
 }
 
 body {
-  font-family: "Poppins", sans-serif; /* Fuente moderna y limpia */
-  background-color: #ccf0c3; /* Fondo verde claro pastel */
-  color: #333; /* Color de texto principal */
-  margin: 0; /* Quita márgenes por defecto */
-  display: flex; /* Centra el contenido */
+  font-family: "Poppins", sans-serif;
+  background-color: #ccf0c3;
+  color: #333;
+  margin: 0;
+  display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Cambié a min-height para mejor scroll */
-  padding: 20px; /* Añadí padding para móviles */
+  min-height: 100vh;
+  padding: 20px;
   height: auto;
 }
 
 /* === Contenedor principal del contenido === */
 .container {
-  background-color: #c4e89e; /* Verde oscuro */
-  border-radius: 20px; /* Bordes redondeados */
-  padding: 25px; /* Espaciado interno */
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Sombra sutil */
+  background-color: #c4e89e;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   text-align: center;
-  width: 100%; /* Ancho adaptable */
-  max-width: 400px; /* Máximo ancho en pantallas grandes */
+  width: 100%;
+  max-width: 400px; /* Para móvil por defecto */
 }
 
 /* === Título principal === */
 h1 {
-  color: #3e6715; /* Verde más claro que contraste con el fondo */
+  color: #3e6715;
   margin-bottom: 10px;
   font-size: 2.2em;
 }
@@ -62,10 +62,9 @@ input:focus {
 button {
   width: 100%;
   padding: 15px;
-  background-color: #4c8a2f; /* Verde medio */
+  background-color: #4c8a2f;
   color: white;
   border: none;
-  padding: 10px 15px;
   border-radius: 12px;
   font-size: 16px;
   cursor: pointer;
@@ -74,9 +73,10 @@ button {
 }
 
 button:hover {
-  background-color: #3a6b24; /* Se oscurece al pasar el mouse */
+  background-color: #3a6b24;
 }
 
+/* === Top Selector === */
 .top-selector {
   background: #F8FFFA;
   border: 2px solid #C3EEAF;
@@ -109,7 +109,7 @@ button:hover {
   border-color: #2E8B57;
 }
 
-/* === Contenedor del resultado general === */
+/* === Resultado === */
 .resultado {
   margin-top: 15px;
   background-color: #b0e57c;
@@ -119,7 +119,7 @@ button:hover {
 
 /* === Clase para ocultar secciones dinámicamente === */
 .oculto {
-  display: none;
+  display: none !important;
 }
 
 /* === Mensajes de error === */
@@ -134,14 +134,15 @@ button:hover {
   font-size: 1.4em;
 }
 
-/* === Indicador de estado (consultando, error, etc.) === */
+/* === Indicador de estado === */
 #status {
   font-size: 0.95rem;
   color: #266106;
   min-height: 1.2rem;
+  margin: 10px 0;
 }
 
-/* === Contenedor de las 4 cajitas (2x2) === */
+/* === Cards container === */
 .cards-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -150,9 +151,9 @@ button:hover {
   justify-items: center;
 }
 
-/* === Cada cajita de puntaje === */
+/* === Card === */
 .card {
-  background-color: #f6fff1; /* Verde muy claro */
+  background-color: #f6fff1;
   border: 2px solid #C3EEAF;
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -170,61 +171,17 @@ button:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* === Título dentro de cada tarjeta === */
 .card h4 {
   margin: 0;
   font-size: 0.9em;
   color: #2f4f2f;
 }
 
-/* === Valor numérico dentro de la tarjeta === */
 .score {
   margin-top: 8px;
   font-size: 2.4em;
   font-weight: bold;
   color: #355e3b;
-}
-
-/* === Responsivo para pantallas pequeñas === */
-@media (max-width: 400px) {
-  .cards-container {
-    grid-template-columns: 1fr; /* Una tarjeta por fila en móvil */
-  }
-}
-
-/* === Selector de Top === */
-.top-selector {
-  margin-top: 15px;
-  background-color: #b0e57c; /* Verde claro */
-  border-radius: 10px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.top-selector label {
-  color: #2f4f2f;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-
-.top-selector select {
-  width: 85%;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid #8ab96f;
-  background-color: #f6fff1;
-  font-size: 1em;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.top-selector select:hover {
-  background-color: #e1f5c4;
-  border-color: #4c8a2f;
 }
 
 /* === Ranking === */
@@ -280,33 +237,45 @@ button:hover {
   color: #666;
 }
 
-/* Responsivo */
-@media(max-width: 767px) {
-  .ranking-item {
-    grid-template-columns: 30px 1fr 50px;
-  }
+/* ============================================= */
+/* === LAYOUT RESPONSIVE - ESTA ES LA PARTE NUEVA === */
+/* ============================================= */
+
+/* Por defecto (móvil) */
+.main-content {
+  display: block;
 }
 
 .left-section, .right-section {
   width: 100%;
 }
 
-/* === Para escritorio (min-width: 768px) === */
-@media (min-width: 767px) {
+.ranking-desktop {
+  display: none;
+}
+
+.ranking-mobile {
+  display: block;
+}
+
+/* === PARA ESCRITORIO (≥768px) === */
+@media (min-width: 768px) {
   .container {
-    max-width: 800px; /* Más ancho en escritorio */
+    max-width: 900px; /* Más ancho para escritorio */
     padding: 30px;
   }
   
   .main-content {
-    display: block;
+    display: flex;
     gap: 30px;
     align-items: flex-start;
+    justify-content: space-between;
   }
   
   .left-section {
-    width: 100%;
+    width: 40%;
     flex-shrink: 0;
+    text-align: left;
   }
   
   .right-section {
@@ -318,48 +287,59 @@ button:hover {
   
   /* Mover ranking a la sección derecha en escritorio */
   .ranking-mobile {
-    display: none;
+    display: none !important;
   }
   
-  .ranking-desktop {
-    display: block;
-  }
-  
-  /* Ajustar el ranking para que aparezca en .right-section */
   #rankingContainer.ranking-desktop {
+    display: block !important;
     margin-top: 0;
+  }
+  
+  /* Ajustes específicos para elementos en escritorio */
+  input, button {
+    width: 100%;
+  }
+  
+  .top-selector {
+    margin: 15px 0;
+  }
+  
+  #resultado {
+    margin-top: 0;
+  }
+  
+  .cards-container {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* === Para móvil (max-width: 767px) === */
+/* === PARA MÓVIL (<768px) === */
 @media (max-width: 767px) {
+  .container {
+    max-width: 400px;
+  }
+  
   .ranking-desktop {
-    display: none;
+    display: none !important;
   }
   
   .ranking-mobile {
-    display: block;
+    display: block !important;
     margin-top: 20px;
   }
-}
-
-/* === Ajustes para elementos individuales === */
-#resultado {
-  margin-top: 0;
-}
-
-.top-selector {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* Asegurar que los elementos tengan buen espaciado en móvil */
-@media (max-width: 767px) {
+  
   .left-section {
     margin-bottom: 20px;
   }
   
   #resultado {
     margin-bottom: 20px;
+  }
+  
+  .cards-container {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

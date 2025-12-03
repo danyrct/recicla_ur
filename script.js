@@ -1,12 +1,16 @@
-// script.js - versión con logging detallado para depuración
+// script.js - versión con layout responsivo mejorado
 const consultarBtn = document.getElementById("consultarBtn");
 const userIdInput = document.getElementById("userId");
 const resultado = document.getElementById("resultado");
 const errorEl = document.getElementById("error");
 const statusEl = document.getElementById("status");
 const topSelect = document.getElementById("topSelect");
+
+// Contenedores de ranking
 const rankingContainer = document.getElementById("rankingContainer");
+const rankingContainerMobile = document.getElementById("rankingContainerMobile");
 const rankingLista = document.getElementById("rankingLista");
+const rankingListaMobile = document.getElementById("rankingListaMobile");
 
 function setStatus(text, kind = "info") {
   if (!statusEl) return;
@@ -34,6 +38,27 @@ function fetchWithTimeout(url, options = {}, timeout = 8000) {
         reject(err);
       });
   });
+}
+
+// Función para sincronizar los rankings entre desktop y mobile
+function sincronizarRankings() {
+  if (rankingLista && rankingListaMobile) {
+    rankingListaMobile.innerHTML = rankingLista.innerHTML;
+  }
+}
+
+// Función para manejar el layout responsivo
+function manejarLayoutResponsivo() {
+  const isMobile = window.innerWidth < 768;
+  
+  // Actualizar clases según el dispositivo
+  if (isMobile) {
+    document.body.classList.add('mobile');
+    document.body.classList.remove('desktop');
+  } else {
+    document.body.classList.add('desktop');
+    document.body.classList.remove('mobile');
+  }
 }
 
 consultarBtn.addEventListener("click", async () => {
@@ -138,25 +163,21 @@ consultarBtn.addEventListener("click", async () => {
   }
 });
 
-// Detectar cambio en el selector
-// script.js - versión corregida
-// ... (código anterior se mantiene igual hasta el evento change) ...
-
-// Detectar cambio en el selector
+// Detectar cambio en el selector de ranking
 topSelect.addEventListener("change", async () => {
   const categoria = topSelect.value;
 
   console.clear();
   console.log("📌 Selector de ranking cambiado a:", categoria);
 
-  // Si no selecciona nada, ocultar el ranking
+  // Si no selecciona nada, ocultar ambos rankings
   if (categoria === "nada") {
-    rankingContainer.classList.add("oculto");
+    if (rankingContainer) rankingContainer.classList.add("oculto");
+    if (rankingContainerMobile) rankingContainerMobile.classList.add("oculto");
     return;
   }
 
   try {
-    // CORRECCIÓN 1: Usar el valor correcto para la URL
     const url = `https://recicla.onrender.com/top_${categoria}`;
     console.log("URL de ranking:", url);
 
@@ -181,24 +202,27 @@ topSelect.addEventListener("change", async () => {
 
     console.log("Ranking recibido:", lista);
 
-    // Limpiar contenedor
-    rankingLista.innerHTML = "";
-
-    // CORRECCIÓN 2: Determinar el campo correcto para ordenar y mostrar
+    // Determinar el campo correcto para ordenar y mostrar
     const campoPuntaje = categoria === 'total' ? 'total' : 
-                        categoria === 'latas' ? 'lata' :
+                        categoria === 'latas' ? 'latas' :
                         categoria === 'tetra' ? 'tetra' :
                         categoria === 'vidrio' ? 'vidrio' :
 
     // Ordenar por puntaje de mayor a menor
     lista.sort((a, b) => b[campoPuntaje] - a[campoPuntaje]);
 
+    // Limpiar contenedor principal
+    if (rankingLista) {
+      rankingLista.innerHTML = "";
+    }
+
     // Crear cada elemento visual
     lista.forEach((item, index) => {
+      if (!rankingLista) return;
+      
       const div = document.createElement("div");
       div.className = "ranking-item";
       
-      // CORRECCIÓN 3: Mostrar el puntaje correcto según la categoría
       const puntaje = item[campoPuntaje] || 0;
       
       div.innerHTML = `
@@ -212,7 +236,17 @@ topSelect.addEventListener("change", async () => {
       rankingLista.appendChild(div);
     });
 
-    rankingContainer.classList.remove("oculto");
+    // Mostrar ambos rankings
+    if (rankingContainer) {
+      rankingContainer.classList.remove("oculto");
+    }
+    if (rankingContainerMobile) {
+      rankingContainerMobile.classList.remove("oculto");
+    }
+    
+    // Sincronizar contenido entre desktop y mobile
+    sincronizarRankings();
+    
     setStatus("Ranking cargado ✔");
 
   } catch (err) {
@@ -221,42 +255,30 @@ topSelect.addEventListener("change", async () => {
   }
 });
 
-// Función para actualizar la posición del ranking según el dispositivo
-function actualizarPosicionRanking() {
-  const rankingContainer = document.getElementById('rankingContainer');
-  const rightSection = document.querySelector('.right-section');
-  const isMobile = window.innerWidth <= 767;
+// Inicializar el layout responsivo
+window.addEventListener('load', () => {
+  manejarLayoutResponsivo();
   
-  // Remover de donde esté actualmente
-  rankingContainer.remove();
-  
-  if (isMobile) {
-    // En móvil: poner al final del container
-    document.querySelector('.container').appendChild(rankingContainer);
-    rankingContainer.classList.remove('ranking-desktop');
-    rankingContainer.classList.add('ranking-mobile');
-  } else {
-    // En escritorio: poner en .right-section
-    if (rightSection) {
-      rightSection.appendChild(rankingContainer);
-      rankingContainer.classList.remove('ranking-mobile');
-      rankingContainer.classList.add('ranking-desktop');
-    }
+  // Si hay un ranking visible, asegurarse de que esté en el lugar correcto
+  if (rankingContainer && !rankingContainer.classList.contains('oculto')) {
+    sincronizarRankings();
   }
-}
+});
 
-// Actualizar al cargar y al cambiar tamaño de ventana
-window.addEventListener('load', actualizarPosicionRanking);
-window.addEventListener('resize', actualizarPosicionRanking);
+// Actualizar layout al cambiar tamaño de ventana
+window.addEventListener('resize', manejarLayoutResponsivo);
 
-// También actualizar cuando se muestra el ranking (por si acaso)
+// También actualizar cuando se muestra el ranking
 topSelect.addEventListener('change', () => {
-  // Esperar un momento para que se procese el cambio
-  setTimeout(actualizarPosicionRanking, 50);
+  setTimeout(sincronizarRankings, 50);
 });
 
 // Actualizar cuando se consulta un usuario
 consultarBtn.addEventListener('click', () => {
-  // Esperar a que se complete la consulta
-  setTimeout(actualizarPosicionRanking, 100);
+  // Pequeño delay para asegurar que la UI se actualice
+  setTimeout(() => {
+    if (!rankingContainer.classList.contains('oculto')) {
+      sincronizarRankings();
+    }
+  }, 100);
 });
